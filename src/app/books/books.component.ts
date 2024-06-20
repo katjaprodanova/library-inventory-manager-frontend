@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { AddBookComponent } from './add-book/add-book.component';
+import { DeleteBookComponent } from './delete-book/delete-book.component';
 
 @Component({
   selector: 'app-books',
@@ -42,8 +43,7 @@ export class BooksComponent implements OnInit {
     this.dataSource.data = this.books;
   }
 
-    
- 
+  
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -53,11 +53,6 @@ export class BooksComponent implements OnInit {
   ngOnInit(): void {
     this.getBooks();
     this.getCategories();
-    this.getTotalBooks();
-    //this.dataSource.data = this.books;
-  //  this.dataSource.paginator = this.paginator;
-   // this.dataSource.sort = this.sort;
-    console.log("helloooo" + this.dataSource.data.length);
   }
 
  public getBooks(): void{
@@ -78,52 +73,12 @@ export class BooksComponent implements OnInit {
   const inputElement = event.target as HTMLInputElement;
   const filterValue = inputElement.value.trim().toLowerCase();
   
-  // Implement your filtering logic here
-  // For example, you can filter books based on the filterValue
 
-  // Update dataSource or perform filtering action
   this.dataSource.filter = filterValue;
 }
 
-public searchBooks(key: string): void {
-  const results: Book[] = [];
-  //this.totalNumOfBooks = this.getBooks.length;
-  for(const book of this.books){
-    if (book.bookName.toLowerCase().indexOf(key.toLowerCase())!== -1
-        || book.author.toLowerCase().indexOf(key.toLowerCase())!== -1
-        || book.author.toLowerCase().indexOf(key.toLowerCase())!== -1
-        || book.description.toLowerCase().indexOf(key.toLowerCase())!== -1
-        || book.category.name.toLowerCase().indexOf(key.toLowerCase())!== -1){
-      results.push(book);
-    }
-  }
-  this.books = results;
-  if(results.length === 0 || !key) {
-    this.getBooks();
-  }
-}
 
-public onOpenModal(book: Book | null, mode: string): void{
-  const bookContainer = document.getElementById('main-book-container');
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.style.display= 'none';
-  button.setAttribute('data-toggle','modal');
-  if(mode === 'add'){
-    button.setAttribute('data-target','#AddBookModal');
-  }
-  if(mode === 'edit'){
-    this.editBook = book;
-    button.setAttribute('data-target','#UpdateBookModal');
-  }
-  if(mode === 'delete'){
-    this.deleteBook = book;
-    button.setAttribute('data-target','#DeleteBookModal');
-  }
 
-  bookContainer?.appendChild(button);
-  button.click();
-}
 public onOpenCategoryModal(category: Category | null, mode: string): void{
   const container = document.getElementById('body');
   const button = document.createElement('button');
@@ -140,57 +95,7 @@ public onOpenCategoryModal(category: Category | null, mode: string): void{
 }
 
 
-showAddCategoryInput(): void {
-  this.isAddingCategory = true;
-}
 
-public onAddBook(addForm: NgForm): void{
-  document.getElementById('add-form-close-btn')?.click();
-  this.bookService.addBook(addForm.value).subscribe(
-    (response: Book)=>{
-      console.log(response);
-      this.getBooks();
-      addForm.reset();
-    },
-    (error: HttpErrorResponse)=>{
-      alert(error.message);
-    }
-    
-  )
-}
-
-public onUpdateBook(book: Book): void{
-  document.getElementById('edit-form-close-btn')?.click();
-  this.bookService.updateBook(book).subscribe(
-    (response: Book)=>{
-      console.log(response);
-      console.log(book);
-      this.getBooks();
-    },
-    (error: HttpErrorResponse)=>{
-      alert(error.message);
-    }
-    
-  )
-}
-
-public onDeleteBook(bookId: number | undefined): void{
-  if (bookId === undefined) {
-    alert('Book ID is not valid');
-    return;
-  }
-  document.getElementById('delete-form-close-btn')?.click();
-  this.bookService.deleteBook(bookId).subscribe(
-    (response: void)=>{
-      console.log(response);
-      this.getBooks();
-    },
-    (error: HttpErrorResponse)=>{
-      alert(error.message);
-    }
-    
-  )
-}
 
  public getCategories(): void {
   this.categoryService.getCategories().subscribe(
@@ -218,29 +123,14 @@ public onAddCategory(addCategoryForm: NgForm): void{
   )
 }
 
-public getTotalBooks(): void {
-  this.bookService.getBookCount().subscribe(
-    (count: number) => {
-      this.totalBooks = count;
-    },
-    (error: any) => {
-      console.error('Error fetching book count:', error);
-    }
-  );
-}
 
+// public filterBooksByCategory(books: Book[]): Book[] {
+//   if (this.selectedCategoryId) {
+//     return books.filter(book => book.category && book.category.id === this.selectedCategoryId);
+//   }
+//   return books;
+// }
 
-public filterBooksByCategory(books: Book[]): Book[] {
-  if (this.selectedCategoryId) {
-    return books.filter(book => book.category && book.category.id === this.selectedCategoryId);
-  }
-  return books;
-}
-
-public onCategoryChange(categoryId: number): void {
-  this.selectedCategoryId = categoryId;
-  this.getBooks();
-}
 
 onEditBookClick(book:Book){
  const dialogRef =  this.matDialog.open(BookDetailsComponent, {data:book})
@@ -253,8 +143,17 @@ onEditBookClick(book:Book){
 onAddBookClick(){
   const dialogRef =  this.matDialog.open(AddBookComponent)
    dialogRef.afterClosed().subscribe(result => {
-     this.bookService.addBook(result)
+    if(result){
+      this.getBooks();
+    }
    });
  }
-
+ public onDeleteBook(bookId: number): void{
+  const dialogRef =  this.matDialog.open(DeleteBookComponent,{data:bookId})
+   dialogRef.afterClosed().subscribe(result => {
+    if(result){
+      this.getBooks();
+    }
+   });
+}
 }

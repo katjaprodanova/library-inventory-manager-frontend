@@ -14,7 +14,19 @@ import { CategoryService } from 'src/app/category.service';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
 
-  public book:Book
+  public book:Book = {
+    author:"",
+    bookName:"",
+    description:"",
+    imgUrl:"",
+    category: {
+      id: 0,
+      name: ''
+    },
+    numberOfPages:0,
+    id :0
+
+  }
   form : FormGroup
   public categories: Category[]=[];
   sub = new Subscription();
@@ -28,15 +40,14 @@ export class AddBookComponent implements OnInit, OnDestroy {
    ) {}
  
    ngOnInit(): void {
-   //  this.book = this.data;
      this.form = new FormGroup({
-       bookName: new FormControl(this.book.bookName),
-       author: new FormControl(this.book.author),
-       category: new FormControl(this.book.category.id),
+       bookName: new FormControl("",Validators.required),
+       author: new FormControl("",Validators.required),
+       category: new FormControl("",Validators.required),
      
-       numberOfPages: new FormControl(this.book.numberOfPages),
-       description: new FormControl(this.book.description ),
-       imgUrl: new FormControl(this.book.imgUrl)
+       numberOfPages: new FormControl("",Validators.required),
+       description: new FormControl("",Validators.required),
+       imgUrl: new FormControl("",Validators.required)
      });
      this.sub.add(
        this.categoryService.getCategories().subscribe(response=>{
@@ -51,14 +62,17 @@ export class AddBookComponent implements OnInit, OnDestroy {
          this.changeDetectorRef.detectChanges();
        })
      )
+    
    }
  
    submit(){
+    if(this.form.valid){
      this.book.bookName = this.form.get("bookName")?.value;
-     this.bookService.updateBook(this.book).subscribe(response => {
+     this.bookService.addBook(this.book).subscribe(response => {
        console.log(response);
-       this.dialogRef.close();
+       this.dialogRef.close(true);
      })
+    }
    }
    cancel(){
      this.dialogRef.close()

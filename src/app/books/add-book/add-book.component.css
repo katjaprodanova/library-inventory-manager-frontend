@@ -1,0 +1,12 @@
+.book-form{
+    width: 500px;
+    padding: 40px 40px;
+}
+mat-form-field{
+    width: 100% !important;
+}
+.dialog-actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

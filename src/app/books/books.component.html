@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(213, 213, 229);">
     <a class="navbar-brand" href="#">Library Inventory Manager</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -31,15 +31,9 @@
       </ul>
       <mat-form-field>
         <input matInput placeholder="Search a book" (input)="applyFilter($event)">
+        <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
-      
-      
-      <!-- <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search"
-        (ngModelChange)="searchBooks(key.value)" #key="ngModel" ngModel name="key"
-        placeholder="Search a book" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-      </form> -->
+
     </div>
   </nav>
 
@@ -86,7 +80,7 @@
     <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef> </mat-header-cell>
       <mat-cell *matCellDef="let book"> 
-        <span id="edit-container"><a (click)="onEditBookClick(book)"><i class="fa-solid fa-pen"></i></a></span> 
+        <span id="edit-container"><a (click)="onEditBookClick(book)"><mat-icon color="primary">edit</mat-icon></a></span> 
       </mat-cell>
     </ng-container>
   
@@ -94,150 +88,23 @@
     <ng-container matColumnDef="delete">
       <mat-header-cell *matHeaderCellDef> </mat-header-cell>
       <mat-cell *matCellDef="let book"> 
-        <span id="delete-container"><a (click)="onOpenModal(book, 'delete')"><i class="fa-solid fa-trash-can"></i></a></span> 
+        <span id="delete-container"><a (click)="onDeleteBook(book.id)"><mat-icon color="warn">delete_outline</mat-icon></a></span> 
       </mat-cell>
     </ng-container>
   
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row class="table-row"  *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
   
   </mat-table>
  
  <mat-paginator #paginator 
  [pageIndex]="0"
- [pageSize]="2"
- [pageSizeOptions]="[2,5, 10, 20]" >
+ [pageSize]="5"
+ [pageSizeOptions]="[5, 10, 20]" >
   </mat-paginator>
  </div>
-  <!-- Add Book Modal -->
-<div class="modal fade" id="AddBookModal" tabindex="-1" role="dialog" aria-labelledby="AddBookModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="AddBookModal">Add a new book into inventory </h5>
-          <button id="add-form-close-btn" type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form #addForm="ngForm" (ngSubmit)="onAddBook(addForm)">
-            <div class="form-group">
-              <label for="bookName">Book name</label>
-              <input type="text" ngModel name="bookName" class="form-control" id="bookName" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="author">Author</label>
-              <input type="text" ngModel  name="author" class="form-control" id="author" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="numberOfPages">Number of pages</label>
-              <input type="number" ngModel name="numberOfPages" class="form-control" id="numberOfPages" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="category">Select a category</label>
-              <select ngModel name="category" class="form-control" id="category" >
-                <option *ngFor="let category of categories" [ngValue]="category" >{{category.name}}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea ngModel name="description" class="form-control" id="description" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="imgUrl">Image URL: </label>
-              <input type="text" ngModel name="imgUrl" class="form-control" id="imgUrl" placeholder="">
-            </div>
-            <div class="modal-footer">
-            <button  type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button id="add-book-btn" type="submit" class="btn btn-primary">Add book</button>
-          </div>
-          </form>
-        </div>
-        
-        
-      </div>
-    </div>
-  </div>
-  <!-- Edit/Update Book Modal -->
-  <div class="modal fade" id="UpdateBookModal" tabindex="-1" role="dialog" aria-labelledby="UpdateBookModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="UpdateBookModal">Update book with id # {{editBook?.id}} </h5>
-          <button id="edit-form-close-btn" type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form #editForm="ngForm" >
-            <input type="hidden" ngModel="{{editBook?.id}}" name="id">
-            <div class="form-group">
-              <label for="bookName">Book name</label>
-              <input type="text" ngModel="{{editBook?.bookName}}" name="bookName" class="form-control" id="bookName" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="author">Author</label>
-              <input type="text" ngModel="{{editBook?.author}}"  name="author" class="form-control" id="author" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="numberOfPages">Number of pages</label>
-              <input type="number" ngModel="{{editBook?.numberOfPages}}" name="numberOfPages" class="form-control" id="numberOfPages" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="category">Select a category</label> 
-               <select ngModel="{{editBook?.category?.id}}" name="category" class="form-control" id="category" >
-                <option *ngFor="let category of categories" [ngValue]="category" [selected]="category.id === editBook?.category?.id" >{{category.name}}</option>
-              </select>
-                <mat-form-field>
-                  <mat-label>Select a category</mat-label>
-                  <mat-select>
-                   <mat-option>TEST</mat-option>
-                   <mat-option>TEST</mat-option>
-                   <mat-option>TEST</mat-option>
-                   <mat-option>TEST</mat-option>
-                  </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea ngModel="{{editBook?.description}}" name="description" class="form-control" id="description" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="imgUrl">Image URL: </label>
-              <input type="text" ngModel="{{editBook?.imgUrl}}" name="imgUrl" class="form-control" id="imgUrl" placeholder="">
-            </div>
-            <div class="modal-footer">
-            <button  type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button (click)="onUpdateBook(editForm.value)" id="edit-book-btn"  class="btn btn-primary">Update book</button>
-          </div>
-          </form>
-        </div>
-        
-        
-      </div>
-    </div>
-  </div>
-  <!-- Delete Book Modal -->
-<div class="modal fade" id="DeleteBookModal" tabindex="-1" role="dialog" aria-labelledby="DeleteBookModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h6 class="modal-title" id="DeleteBookModal">Are you sure you want to delete the book 
-            <span style="color: red;">{{deleteBook?.bookName}}</span>
-          </h6>
-          <button id="delete-form-close-btn" style="visibility: hidden;" type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-danger" (click)="onDeleteBook(deleteBook?.id)">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
    <!-- Add Category modal -->
 <div class="modal fade" id="AddCategoryModal" tabindex="-1" role="dialog" aria-labelledby="AddCategoryModal" aria-hidden="true">
@@ -268,6 +135,3 @@
   </div>
 </div>
 
-  <div *ngFor="let category of categories">
-    <div> {{category.name}}</div>
-  </div>

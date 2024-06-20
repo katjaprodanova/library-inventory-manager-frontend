@@ -21,6 +21,9 @@ import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DatatableexampleComponent } from './datatableexample/datatableexample.component';
 import { AddBookComponent } from './books/add-book/add-book.component';
+import { MatIconModule } from '@angular/material/icon';
+import { DeleteBookComponent } from './books/delete-book/delete-book.component';
+import {MatCardModule} from '@angular/material/card'; 
 //import { AddBookComponent } from './add-book/add-book.component';
 
 
@@ -30,7 +33,8 @@ import { AddBookComponent } from './books/add-book/add-book.component';
     BooksComponent,
     BookDetailsComponent,
     DatatableexampleComponent,
-    AddBookComponent
+    AddBookComponent,
+    DeleteBookComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +50,9 @@ import { AddBookComponent } from './books/add-book/add-book.component';
     ReactiveFormsModule,
     MatDialogModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule
   ],
   providers: [BookService, CategoryService],
   bootstrap: [AppComponent]
