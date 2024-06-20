@@ -1,0 +1,115 @@
+/* Navbar Styles */
+.navbar {
+  background-color: #f8f9fa; /* Light grey background */
+}
+
+.navbar-brand {
+  font-size: 1.5rem; /* Larger font size for the brand */
+}
+
+.navbar-toggler-icon {
+  background-color: #6c757d; /* Darker grey for the toggler icon */
+}
+
+/* Main Container */
+.container {
+  margin-top: 20px; /* Space from the top */
+}
+
+/* Search Form */
+.form-inline .form-control {
+  width: 300px; /* Width of the search input */
+}
+
+.form-inline .btn {
+  margin-left: 10px; /* Margin between input and button */
+}
+
+/* Books List */
+.card {
+  border: none; /* No border for the card */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Light shadow */
+}
+
+.card-header {
+  background-color: #f8f9fa; /* Light grey background for header */
+}
+
+.card-header h5 {
+  margin-bottom: 0; /* Remove margin for header title */
+}
+
+.table {
+  margin-top: 20px; /* Space between card and table */
+}
+
+/* Modal Dialogs */
+.modal-dialog {
+  max-width: 800px; /* Max width for modals */
+}
+
+.modal-content {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Light shadow */
+}
+
+.modal-header {
+  background-color: #f8f9fa; /* Light grey background */
+  border-bottom: none; /* No border at the bottom */
+}
+
+.modal-body {
+  padding: 20px; /* Padding inside modal body */
+}
+
+.modal-footer {
+  border-top: none; /* No border at the top of footer */
+}
+
+/* Buttons */
+.btn-primary,
+.btn-secondary {
+  width: 120px; /* Width of primary and secondary buttons */
+}
+
+#edit-container,
+#delete-container {
+  margin-left: 10px; /* Margin between icons */
+}
+
+.fa-pen,
+.fa-trash-can,
+.fa-magnifying-glass {
+  font-size: 18px; /* Font size for icons */
+  color: #007bff; /* Primary color for icons */
+}
+
+.fa-pen:hover,
+.fa-trash-can:hover,
+.fa-magnifying-glass:hover {
+  color: #0056b3; /* Darker color on hover */
+}
+
+/* Form Controls */
+.form-control {
+  width: 100%; /* Full width for form controls */
+}
+
+/* Category Dropdown */
+.dropdown-item {
+  color: #495057; /* Dark color for dropdown items */
+}
+
+.dropdown-divider {
+  margin-top: 5px; /* Margin above dropdown divider */
+  margin-bottom: 5px; /* Margin below dropdown divider */
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa; /* Light grey background on hover */
+}
+
+.data-table{
+  width: 80%;
+  margin: 20px auto;
+
+}
