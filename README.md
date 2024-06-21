@@ -1,27 +1,35 @@
 # LibraryInventoryManager
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.14.
+This project is designed for managing library books, especially helpful for librarians to manage and keep track of the books in the library. 
+- Using Angular fronend and Angular Material.
+- My SpringBoot repository for backend, [click here.](https://github.com/katjaprodanova/library-inventory-manager-backend)
 
-## Development server
+### Running the application
+- Application runs on port 4200.
+  -  Run SpringBoot backend.
+  -  Run frontend by using `ng serve`in terminal.
+  - Navigate to https://localhost:4200/ in your browser to use the app.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Main page 
+ - <img src="screenshot_mainpage.png" alt="ExpressInk Screenshot" width="600">
+### Adding a book
+- <img src="screenshot_addbook.png" alt="ExpressInk Screenshot" width="600">
+- All fields are required. If the user leaves a blank field, it turns red
+### Sorting
+- <img src="screenshot_addsortbook.png" alt="ExpressInk Screenshot" width="600">
+- We can click on the 'Number of pages' header, and it sorts our books, by ascending, or descending order. 
+- On the picture above, I intentionally made the book's number of pages very low (8), so we can see the book pop up first when we sort them.
+- The sorting works for Book Name, Author, Category and Number of pages. It is disabled for the other fields.
+### Search a book
+- <img src="screenshot_search.jpg" alt="ExpressInk Screenshot" width="600">
+- Searching by keyword "Hist", it gives us the 2 books that include it in their book title.
+- <img src="screenshot_searchauthor.png" alt="ExpressInk Screenshot" width="600">
+- Searching by keyword "Hist", it gives us the 2 books that include it in their book title.
+### Pagination
+- <img src="screenshot_pagination.png" alt="ExpressInk Screenshot" width="600">
+- Choose how many books per page to be displayed.
+### Delete 
+- <img src="screenshot_delete.png" alt="ExpressInk Screenshot" width="600">
+### Edit book
+- <img src="screenshot_editbook.png" alt="ExpressInk Screenshot" width="600">
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
